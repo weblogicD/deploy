@@ -14,6 +14,10 @@ pipeline {
        }
        stage('uploadnexus') {
            steps {
+           when {
+                branch 'release'
+                branch 'develop'
+            }
             nexusArtifactUploader artifacts: [[artifactId: 'java', classifier: '', file: 'webapp/target/webapp.war', type: 'war']], credentialsId: 'nexus', groupId: '', nexusUrl: '3.84.44.206:8081/nexus', nexusVersion: 'nexus2', protocol: 'http', repository: 'maven', version: '2.1.$BUILD_NUMBER'
             }
        }
